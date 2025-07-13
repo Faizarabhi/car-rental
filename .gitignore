@@ -17,3 +17,6 @@
 /phpunit.xml
 /.phpunit.cache/
 ###< phpunit/phpunit ###
+
+.env
+.env.local
