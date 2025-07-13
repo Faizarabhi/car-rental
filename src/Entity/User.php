@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -24,6 +26,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private ?string $password = null;
+
+    /**
+     * @var Collection<int, Reservation>
+     */
+    #[ORM\OneToMany(targetEntity: Reservation::class, mappedBy: 'user')]
+    private Collection $car;
+
+    public function __construct()
+    {
+        $this->car = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -85,5 +98,34 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[\Deprecated]
     public function eraseCredentials(): void
     {
+    }
+
+    /**
+     * @return Collection<int, Reservation>
+     */
+    public function getCar(): Collection
+    {
+        return $this->car;
+    }
+
+    public function addCar(Reservation $car): static
+    {
+        if (!$this->car->contains($car)) {
+            $this->car->add($car);
+            $car->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCar(Reservation $car): static
+    {
+        if ($this->car->removeElement($car)) {
+            if ($car->getUser() === $this) {
+                $car->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

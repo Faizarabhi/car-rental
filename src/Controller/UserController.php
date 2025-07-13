@@ -17,6 +17,7 @@ class UserController extends AbstractController
     #[Route('/api/register', name: 'api_register', methods: ['POST'])]
     #[OA\Post(
         path: '/api/register',
+        tags: ['Login Check'],
         requestBody: new OA\RequestBody(
             required: true,
             content: new OA\JsonContent(

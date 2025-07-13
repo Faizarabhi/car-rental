@@ -1,6 +1,20 @@
 nelmio_api_doc:
-    documentation:
-        info:
-            title: 'API Documentation'
-            description: 'Description de mon API'
-            version: '1.0.0'
+  documentation:
+    info:
+      title: 'Car Rental API'
+      version: '1.0.0'
+    components:
+      securitySchemes:
+        Bearer:
+          type: http
+          scheme: bearer
+          bearerFormat: JWT
+    security:
+      - Bearer: []
+    tags:
+      - name: Login Check
+        description: Authentification (register, login)
+      - name: cars
+        description: Opérations liées aux voitures
+      - name: reservations
+        description: Opérations de réservation

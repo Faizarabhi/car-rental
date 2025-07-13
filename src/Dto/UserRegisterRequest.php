@@ -7,9 +7,8 @@ class UserRegisterRequest
 {
     #[Assert\NotBlank]
     #[Assert\Email]
-    public string $email;
+    public ?string $email = null;
 
     #[Assert\NotBlank]
-    #[Assert\Length(min: 6)]
-    public string $password;
+    public ?string $password = null;
 }
